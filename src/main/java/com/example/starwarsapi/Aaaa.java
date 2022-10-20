@@ -1,2 +1,4 @@
-package com.example.starwarsapi;public class Aaaa {
+package com.example.starwarsapi;
+
+public class Aaaa {
 }
