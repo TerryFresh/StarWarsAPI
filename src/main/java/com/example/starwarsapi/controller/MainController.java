@@ -10,13 +10,19 @@
 
 package com.example.starwarsapi.controller;
 
-import com.example.starwarsapi.model.Root;
+
 import com.example.starwarsapi.service.SwapiApiResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
 @RestController
@@ -33,47 +39,46 @@ public class MainController {
     @Autowired
     SwapiApiResources swapiApiResources;
 
-//    @GetMapping(value = "/")
-//    public Root getFilms() throws JsonProcessingException {
-//        return swapiApiResources.getResources();
-//    }
-
     @GetMapping(value = "/")
-    public String getFilms(@RequestParam String text) throws JsonProcessingException {
-
-        String json = restTemplate.getForObject(URL, String.class);
-        Root root = mapper.readValue(json, Root.class);
-
-        String result = restTemplate.getForObject(root.getPeople() + "?search=" + text, String.class);
-
-        return result;
+    public String getFilms() throws JsonProcessingException {
+        return swapiApiResources.getResources();
     }
 
 
-//    @GetMapping("/")
-//    public String getFilms() throws IOException {
-//
-//        ResponseEntity<String> response = restTemplate.getForEntity(URL, String.class);
-//
-//        try {
-//            // convert JSON string to Map
-//            Map<String, String> map = mapper.readValue(response.getBody(), Map.class);
-//
-//            return new JSONObject(map).toJSONString();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//       return null;
-//    }
+    @GetMapping(value = "/search")
+    public String getFilms(@RequestParam String text) throws IOException {
+
+        byte[] mapData = swapiApiResources.getResources().getBytes();
+        HashMap<String, String> resourceMap = new HashMap<String, String>();
+        resourceMap = mapper.readValue(mapData, new TypeReference<HashMap<String, String>>() {
+        });
+
+        StringBuilder result = new StringBuilder();
+
+        for(Map.Entry<String, String> entry : resourceMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            result.append(restTemplate.getForObject(value + "?search=" + text, String.class));
 
 
-//    @GetMapping("/")
-//    public String getFilms() throws JsonProcessingException, MalformedURLException {
-//        ResponseEntity<String> response
-//                = restTemplate.getForEntity("https://swapi.dev/api/people/", String.class);
-//        String json = new ObjectMapper().readValue(URL, String.class);
+        }
+
+        return result.toString();
+    }
+
+
+//    @GetMapping(value = "/search")
+//    public HashMap getFilms(@RequestParam String text) throws IOException {
 //
-//        return json;
+//        String json = restTemplate.getForObject(URL, String.class);
+//        Root root = mapper.readValue(json, Root.class);
+//
+//        byte[] mapData = json.getBytes();
+//        HashMap<String, String> myMap = new HashMap<String, String>();
+//        myMap = mapper.readValue(mapData, new TypeReference<HashMap<String,String>>() {});
+//
+//        System.out.println("Map using TypeReference: "+myMap.values());
+//
+//        return myMap;
 //    }
 }
