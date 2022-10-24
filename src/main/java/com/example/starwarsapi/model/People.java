@@ -38,6 +38,27 @@ public class People{
 
     private String edited;
 
+    public People() {
+    }
+
+    public People(String name, String birthYear, String eyeColor, String gender, String hairColor, String height, String mass, String skinColor, String homeworld, List<Films> films, List<Species> species, List<Starships> starships, List<Vehicles> vehicles, String url, String created, String edited) {
+        this.name = name;
+        this.birthYear = birthYear;
+        this.eyeColor = eyeColor;
+        this.gender = gender;
+        this.hairColor = hairColor;
+        this.height = height;
+        this.mass = mass;
+        this.skinColor = skinColor;
+        this.homeworld = homeworld;
+        this.films = films;
+        this.species = species;
+        this.starships = starships;
+        this.vehicles = vehicles;
+        this.url = url;
+        this.created = created;
+        this.edited = edited;
+    }
 
     public String getName() {
         return name;
@@ -165,5 +186,27 @@ public class People{
 
     public void setEdited(String edited) {
         this.edited = edited;
+    }
+
+    @Override
+    public String toString() {
+        return "People{" +
+                "name='" + name + '\'' +
+                ", birthYear='" + birthYear + '\'' +
+                ", eyeColor='" + eyeColor + '\'' +
+                ", gender='" + gender + '\'' +
+                ", hairColor='" + hairColor + '\'' +
+                ", height='" + height + '\'' +
+                ", mass='" + mass + '\'' +
+                ", skinColor='" + skinColor + '\'' +
+                ", homeworld='" + homeworld + '\'' +
+                ", films=" + films +
+                ", species=" + species +
+                ", starships=" + starships +
+                ", vehicles=" + vehicles +
+                ", url='" + url + '\'' +
+                ", created='" + created + '\'' +
+                ", edited='" + edited + '\'' +
+                '}';
     }
 }

@@ -34,6 +34,25 @@ public class Films{
 
     private String edited;
 
+    public Films() {
+    }
+
+    public Films(String title, int episodeId, String openingCrawl, String director, String producer, String releaseDate, List<Species> species, List<Starships> starships, List<Vehicles> vehicles, List<People> characters, List<Planets> planets, String url, String created, String edited) {
+        this.title = title;
+        this.episodeId = episodeId;
+        this.openingCrawl = openingCrawl;
+        this.director = director;
+        this.producer = producer;
+        this.releaseDate = releaseDate;
+        this.species = species;
+        this.starships = starships;
+        this.vehicles = vehicles;
+        this.characters = characters;
+        this.planets = planets;
+        this.url = url;
+        this.created = created;
+        this.edited = edited;
+    }
 
     public String getTitle() {
         return title;

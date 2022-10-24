@@ -1,6 +1,8 @@
 package com.example.starwarsapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Root{
 
     private String films;
