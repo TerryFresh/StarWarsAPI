@@ -1,64 +1,29 @@
 package com.example.starwarsapi.model;
 
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class People{
+import java.util.ArrayList;
+import java.util.Date;
 
-    //Search Fields
-    private String name;
+public class People {
 
-    private String birthYear;
-
-    private String eyeColor;
-
-    private String gender;
-
-    private String hairColor;
-
-    private String height;
-
-    private String mass;
-
-    private String skinColor;
-
-    private String homeworld;
-
-    private List<Films> films;
-
-    private List<Species> species;
-
-    private List<Starships> starships;
-
-    private List<Vehicles> vehicles;
-
-    private String url;
-
-    private String created;
-
-    private String edited;
-
-    public People() {
-    }
-
-    public People(String name, String birthYear, String eyeColor, String gender, String hairColor, String height, String mass, String skinColor, String homeworld, List<Films> films, List<Species> species, List<Starships> starships, List<Vehicles> vehicles, String url, String created, String edited) {
-        this.name = name;
-        this.birthYear = birthYear;
-        this.eyeColor = eyeColor;
-        this.gender = gender;
-        this.hairColor = hairColor;
-        this.height = height;
-        this.mass = mass;
-        this.skinColor = skinColor;
-        this.homeworld = homeworld;
-        this.films = films;
-        this.species = species;
-        this.starships = starships;
-        this.vehicles = vehicles;
-        this.url = url;
-        this.created = created;
-        this.edited = edited;
-    }
+    public String name;
+    public String height;
+    public String mass;
+    public String hair_color;
+    public String skin_color;
+    public String eye_color;
+    public String birth_year;
+    public String gender;
+    public String homeworld;
+    public ArrayList<String> films;
+    public ArrayList<Object> species;
+    public ArrayList<String> vehicles;
+    public ArrayList<String> starships;
+    public Date created;
+    public Date edited;
+    public String url;
 
     public String getName() {
         return name;
@@ -66,38 +31,6 @@ public class People{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(String birthYear) {
-        this.birthYear = birthYear;
-    }
-
-    public String getEyeColor() {
-        return eyeColor;
-    }
-
-    public void setEyeColor(String eyeColor) {
-        this.eyeColor = eyeColor;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getHairColor() {
-        return hairColor;
-    }
-
-    public void setHairColor(String hairColor) {
-        this.hairColor = hairColor;
     }
 
     public String getHeight() {
@@ -116,12 +49,44 @@ public class People{
         this.mass = mass;
     }
 
-    public String getSkinColor() {
-        return skinColor;
+    public String getHair_color() {
+        return hair_color;
     }
 
-    public void setSkinColor(String skinColor) {
-        this.skinColor = skinColor;
+    public void setHair_color(String hair_color) {
+        this.hair_color = hair_color;
+    }
+
+    public String getSkin_color() {
+        return skin_color;
+    }
+
+    public void setSkin_color(String skin_color) {
+        this.skin_color = skin_color;
+    }
+
+    public String getEye_color() {
+        return eye_color;
+    }
+
+    public void setEye_color(String eye_color) {
+        this.eye_color = eye_color;
+    }
+
+    public String getBirth_year() {
+        return birth_year;
+    }
+
+    public void setBirth_year(String birth_year) {
+        this.birth_year = birth_year;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getHomeworld() {
@@ -132,36 +97,52 @@ public class People{
         this.homeworld = homeworld;
     }
 
-    public List<Films> getFilms() {
+    public ArrayList<String> getFilms() {
         return films;
     }
 
-    public void setFilms(List<Films> films) {
+    public void setFilms(ArrayList<String> films) {
         this.films = films;
     }
 
-    public List<Species> getSpecies() {
+    public ArrayList<Object> getSpecies() {
         return species;
     }
 
-    public void setSpecies(List<Species> species) {
+    public void setSpecies(ArrayList<Object> species) {
         this.species = species;
     }
 
-    public List<Starships> getStarships() {
-        return starships;
-    }
-
-    public void setStarships(List<Starships> starships) {
-        this.starships = starships;
-    }
-
-    public List<Vehicles> getVehicles() {
+    public ArrayList<String> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(List<Vehicles> vehicles) {
+    public void setVehicles(ArrayList<String> vehicles) {
         this.vehicles = vehicles;
+    }
+
+    public ArrayList<String> getStarships() {
+        return starships;
+    }
+
+    public void setStarships(ArrayList<String> starships) {
+        this.starships = starships;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getEdited() {
+        return edited;
+    }
+
+    public void setEdited(Date edited) {
+        this.edited = edited;
     }
 
     public String getUrl() {
@@ -170,43 +151,5 @@ public class People{
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
-    public String getEdited() {
-        return edited;
-    }
-
-    public void setEdited(String edited) {
-        this.edited = edited;
-    }
-
-    @Override
-    public String toString() {
-        return "People{" +
-                "name='" + name + '\'' +
-                ", birthYear='" + birthYear + '\'' +
-                ", eyeColor='" + eyeColor + '\'' +
-                ", gender='" + gender + '\'' +
-                ", hairColor='" + hairColor + '\'' +
-                ", height='" + height + '\'' +
-                ", mass='" + mass + '\'' +
-                ", skinColor='" + skinColor + '\'' +
-                ", homeworld='" + homeworld + '\'' +
-                ", films=" + films +
-                ", species=" + species +
-                ", starships=" + starships +
-                ", vehicles=" + vehicles +
-                ", url='" + url + '\'' +
-                ", created='" + created + '\'' +
-                ", edited='" + edited + '\'' +
-                '}';
     }
 }

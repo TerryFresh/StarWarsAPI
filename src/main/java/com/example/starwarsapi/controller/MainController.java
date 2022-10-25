@@ -14,22 +14,22 @@ package com.example.starwarsapi.controller;
 import com.example.starwarsapi.service.SwapiApiResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 @RestController
 @RequestMapping("/")
 public class MainController {
-
-    private final String URL = "https://swapi.dev/api/";
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -44,41 +44,42 @@ public class MainController {
         return swapiApiResources.getResources();
     }
 
+    @GetMapping(value = "/search", produces = "application/json")
+    public HashMap<String, Object> getFilms(@RequestParam String text) throws IOException {
 
-    @GetMapping(value = "/search")
-    public String getFilms(@RequestParam String text) throws IOException {
-
-        byte[] mapData = swapiApiResources.getResources().getBytes();
+        byte[] data = swapiApiResources.getResources().getBytes();
         HashMap<String, String> resourceMap = new HashMap<String, String>();
-        resourceMap = mapper.readValue(mapData, new TypeReference<HashMap<String, String>>() {
+        resourceMap = mapper.readValue(data, new TypeReference<HashMap<String, String>>() {
         });
 
-        StringBuilder result = new StringBuilder();
+        ObjectNode objectNode = null;
 
-        for(Map.Entry<String, String> entry : resourceMap.entrySet()) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : resourceMap.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            result.append(restTemplate.getForObject(value + "?search=" + text, String.class));
+            JSONObject jsonObject = restTemplate.getForObject(value + "?search=" + text, JSONObject.class);
 
+            assert jsonObject != null;
+            if (!jsonObject.containsValue(0)) {
 
+                String json = jsonObject.toJSONString();
+                JsonNode jsonNode = mapper.readTree(json);
+
+                ArrayNode arrayNode = (ArrayNode) jsonNode.get("results");
+                Iterator<JsonNode> itr = arrayNode.elements();
+
+                ArrayList<Object> arrayList = new ArrayList<>();
+                while (itr.hasNext()) {
+                    objectNode = (ObjectNode) itr.next();
+                    objectNode.put("wiki", objectNode.findValue("name"));
+                    arrayList.add(objectNode);
+                }
+
+                map.put(key, arrayList);
+            }
         }
-
-        return result.toString();
+        return map;
     }
-
-
-//    @GetMapping(value = "/search")
-//    public HashMap getFilms(@RequestParam String text) throws IOException {
-//
-//        String json = restTemplate.getForObject(URL, String.class);
-//        Root root = mapper.readValue(json, Root.class);
-//
-//        byte[] mapData = json.getBytes();
-//        HashMap<String, String> myMap = new HashMap<String, String>();
-//        myMap = mapper.readValue(mapData, new TypeReference<HashMap<String,String>>() {});
-//
-//        System.out.println("Map using TypeReference: "+myMap.values());
-//
-//        return myMap;
-//    }
 }
