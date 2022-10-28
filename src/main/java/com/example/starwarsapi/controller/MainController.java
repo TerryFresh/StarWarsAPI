@@ -81,26 +81,28 @@ public class MainController {
                 while (itr.hasNext()) {
                     objectNode = (ObjectNode) itr.next();
                     String name = String.valueOf(objectNode.findValue("name"));
-                    if (name.equals("null")){
+                    if (name.equals("null")) {
                         name = String.valueOf(objectNode.findValue("title"));
                     }
                     String wiki = wikiService.getWikiSearch(name);
 
-
                     JSONParser parser = new JSONParser();
                     JSONArray jsonArray = (JSONArray) parser.parse(wiki);
                     JSONArray arrayNode1 = (JSONArray) jsonArray.get(3);
-                    System.out.println(arrayNode1.get(0));
 
-                    String result = (String) arrayNode1.get(0);
+                    String result = null;
 
-                    for (int i = 0; i < arrayNode1.size(); i++) {
-                        String fori = (String) arrayNode1.get(i);
-                        if (fori.contains("Star_Wars")){
-                            result = fori;
+                    if (arrayNode1.size() > 0) {
+
+                        result = (String) arrayNode1.get(0);
+                        //calamari cruiser
+                        for (int i = 0; i < arrayNode1.size(); i++) {
+                            String fori = (String) arrayNode1.get(i);
+                            if (fori.contains("Star_Wars")) {
+                                result = fori;
+                            }
                         }
                     }
-
                     objectNode.put("wiki", result);
                     arrayList.add(objectNode);
                 }
